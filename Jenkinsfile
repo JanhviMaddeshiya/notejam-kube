@@ -1,19 +1,13 @@
-def lastSuccessfulBuildID = 0
-def build = currentBuild.previousBuild
-while (build != null) {
-    if (build.result == "SUCCESS")
-    {
-        lastSuccessfulBuildID = build.id as Integer
-        break
-    }
-    build = build.previousBuild
+def lastSuccessfulBuild = currentBuild.getPreviousBuildForStatus(hudson.model.Result.SUCCESS)
+dockertag_id = 0
+if (lastSuccessfulBuild) {
+    dockertag_id = lastSuccessfulBuild.getEnvVars()["DOCKERTAG_ID"]
 }
-def dockerId = lastSuccessfulBuildID + 1
 pipeline {
     agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-        DOCKERTAG_ID = "${dockerId}"
+        DOCKERTAG_ID = "${dockertag_id}"
     }
     stages {
         stage("Clean-up") {
@@ -31,7 +25,16 @@ pipeline {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
-        
+        stage("Get last successful build's DOCKERTAG_ID") {
+            steps {
+                script {
+                    def lastSuccessfulBuild = currentBuild.getPreviousBuildForStatus(hudson.model.Result.SUCCESS)
+                    if (lastSuccessfulBuild) {
+                        DOCKERTAG_ID = lastSuccessfulBuild.getEnvVars()["DOCKERTAG_ID"]
+                    }
+                }
+            }
+        }
         stage("Build") {
             steps {
                 sh "docker build -t janhvimaddeshiya/notejam-tag:${DOCKERTAG_ID} notejam-kube/"
