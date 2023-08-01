@@ -1,6 +1,6 @@
-def lastSuccessfulBuild = currentBuild.getPreviousBuildForStatus(hudson.model.Result.SUCCESS)
+def build = currentBuild.previousBuild
 dockertag_id = 0
-if (lastSuccessfulBuild) {
+if (build.result == "SUCCESS") {
     dockertag_id = lastSuccessfulBuild.getEnvVars()["DOCKERTAG_ID"]
 }
 pipeline {
