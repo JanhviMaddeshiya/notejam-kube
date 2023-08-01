@@ -1,5 +1,6 @@
 def build = currentBuild.previousBuild
 if (build.result == "SUCCESS") {
+    lastSuccessfulBuildID = build.id as Integer
     dockertag_id = lastSuccessfulBuild.getEnvVars()["DOCKERTAG_ID"]
 }
 pipeline {
