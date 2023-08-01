@@ -25,16 +25,6 @@ pipeline {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
-        stage("Get last successful build's DOCKERTAG_ID") {
-            steps {
-                script {
-                    def lastSuccessfulBuild = currentBuild.getPreviousBuildForStatus(hudson.model.Result.SUCCESS)
-                    if (lastSuccessfulBuild) {
-                        DOCKERTAG_ID = lastSuccessfulBuild.getEnvVars()["DOCKERTAG_ID"]
-                    }
-                }
-            }
-        }
         stage("Build") {
             steps {
                 sh "docker build -t janhvimaddeshiya/notejam-tag:${DOCKERTAG_ID} notejam-kube/"
