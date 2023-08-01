@@ -1,5 +1,4 @@
 def build = currentBuild.previousBuild
-dockertag_id = 0
 if (build.result == "SUCCESS") {
     dockertag_id = lastSuccessfulBuild.getEnvVars()["DOCKERTAG_ID"]
 }
