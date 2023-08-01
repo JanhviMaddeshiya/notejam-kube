@@ -2,6 +2,8 @@ def build = currentBuild.previousBuild
 if (build.result == "SUCCESS") {
     lastSuccessfulBuildID = build.id as Integer
     dockertag_id = lastSuccessfulBuild.getEnvVars()["DOCKERTAG_ID"]
+} else if (build.result == "FAILURE") {
+    dockertag_id = 1
 }
 pipeline {
     agent any
