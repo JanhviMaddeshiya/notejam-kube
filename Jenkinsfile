@@ -34,7 +34,7 @@ pipeline {
         
         stage("Build") {
             steps {
-                sh "docker build -t janhvimaddeshiya/notejam-tag:${DOCKERTAG_ID} ."
+                sh "docker build -t janhvimaddeshiya/notejam-tag:${DOCKERTAG_ID} notejam-kube/"
             }
         }
         stage("Push-repo") {
