@@ -37,12 +37,13 @@ pipeline {
                                 // dockertag_id = lastSuccessfulBuildID.description
                                 //DOCKERTAG_ID = previousBuild.description
                                 DOCKERTAG_ID = lastSuccessfulBuildID 
+                                echo DOCKERTAG_ID
                                 break
                             }
                             build = build.previousBuild
                         }
                     }
-                    echo DOCKERTAG_ID as String
+                    //echo DOCKERTAG_ID as String
                 }    
             }
         }
