@@ -24,29 +24,26 @@ pipeline {
         stage("search") {
             steps {
                 script {
+                    def DOCKERTAG_ID = 1
                     def build = currentBuild.previousBuild
                     if (build == null) {
-                        DOCKERTAG_ID = ${DOCKERTAG}
+                        DOCKERTAG_ID = 1
                     } else {
                         while (build != null) {
-                            if (build.result == "SUCCESS" && build.description != null)
+                            if (build.result == "SUCCESS")
                             {
-                                
+
                                 // lastSuccessfulBuildID = build.id as Integer
-                                lastSuccessfulBuildID = build.description.toInteger()
+                                lastSuccessfulBuildID = build.get()
                                 // dockertag_id = lastSuccessfulBuildID.description
                                 //DOCKERTAG_ID = previousBuild.description
-                                echo lastSuccessfulBuildID
-                                env.DOCKERTAG_ID = lastSuccessfulBuildID
+                                DOCKERTAG_ID = lastSuccessfulBuildID + 1
                                 break
                             }
                             build = build.previousBuild
                         }
                     }
-                    DOCKER = DOCKERTAG_ID as Integer
-                    int a = 1
-                    env.DOCKERTAG = DOCKER + a
-                    echo DOCKERTAG as String
+                    echo DOCKERTAG_ID as String
                 }    
             }
         }
