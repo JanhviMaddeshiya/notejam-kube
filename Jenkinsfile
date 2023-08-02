@@ -43,6 +43,7 @@ pipeline {
                         }
                     }
                     DOCKERTAG = DOCKERTAG_ID + 1
+                    echo DOCKERTAG as String
                 }    
             }
         }
