@@ -25,7 +25,7 @@ pipeline {
                 script {
                     def build = currentBuild.previousBuild
                     if (build == null) {
-                        DOCKERTAG_ID = ${DOCKERTAG_ID}
+                        DOCKERTAG_ID = ${DOCKERTAG}
                     } else {
                         while (build != null) {
                             if (build.result == "SUCCESS" && build.description != null)
