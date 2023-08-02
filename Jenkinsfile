@@ -1,6 +1,6 @@
 def dockertag_id
 def lastSuccessfulBuildID = 0
-def build = currentBuild.previousBuild
+def build = currentBuild.previousBuild()
 if (build == null) {
     dockertag_id = 1
 } else {
@@ -8,7 +8,7 @@ if (build == null) {
         if (build.result == "SUCCESS")
         {
             lastSuccessfulBuildID = currentBuild.getPreviousSuccessfulBuild()?.number ?:0
-            dockertag_id = (lastSuccessfulBuildID.${DOCKERTAG_ID}).toInteger
+            dockertag_id = lastSuccessfulBuildID.${dockertag_id}.toInteger
             
             break
         }
