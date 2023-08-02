@@ -7,6 +7,7 @@ if (build == null) {
         {
             def lastSuccessfullBuild = build.getPreviousBuild()
             dockertag_id = lastSuccessfullBuild.${dockertag_id}
+            break
         }
     }
 }
