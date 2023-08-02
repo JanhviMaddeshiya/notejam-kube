@@ -1,26 +1,8 @@
-def dockertag_id
-def lastSuccessfulBuildID = 0
-//def build = currentBuild.previousBuild()
-def cls = currentBuild.getPreviousBuild().getRawBuild().actions.find{ it instanceof ParametersAction }?.parameters.find{it.name == 'dockertag_id'}?.value
-if (build == null) {
-    dockertag_id = 1
-} else {
-    while (build != null) {
-        if (build.result == "SUCCESS")
-        {
-            //lastSuccessfulBuildID = currentBuild.getPreviousSuccessfulBuild()?.number ?:0
-            //dockertag_id = lastSuccessfulBuildID.${dockertag_id}.toInteger
-            dockertag_id = cls
-            break
-        }
-        build = build.previousBuild
-    }
-}
 pipeline {
     agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-        DOCKERTAG_ID = "${dockertag_id}"
+        DOCKERTAG_ID = 1
     }
     stages {
         stage("Clean-up") {
@@ -36,6 +18,13 @@ pipeline {
         stage("Log-in") {
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+        stage("search") {
+            steps {
+                script {
+                    def repo = sh "docker search janhvimaddeshiya/notejam-tag:latest"
+                }
             }
         }
         stage("Build") {
