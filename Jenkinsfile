@@ -1,3 +1,12 @@
+if (build.result == "SUCCESS") {
+            lastSuccessfulBuildID = build.id as Integer
+            def job = Jenkins.instance.getItem("JOB_NAME")
+            def lastSuccessful = job.getBuildByNumber(lastSuccessfulBuildID)
+            def actions = lastSuccessful.getActions(hudson.model.ParametersAction)
+            dockertag_id = actions.find { it.getParameterName() == 'DOCKERTAG_ID' }?.getResolvedValue()?.toInteger() ?: 1
+            break // Break out of the loop after finding the last successful build
+        }
+
 def build = currentBuild.previousBuild
 if (build == null) {
     dockertag_id = 1
@@ -5,12 +14,17 @@ if (build == null) {
     while (build != null) {
         if (build.result == "SUCCESS")
         {
-            lastSuccessfulBuildID = build.id as Integer
-            def lastSuccessful = Jenkins.instance.getItemByFullName(JOB_NAME).getBuildByNumber(lastSuccessfulBuildID)
+            def job = Jenkins.instance.getItem("JOB_NAME")
+            def lastSuccessful = job.getBuildByNumber(lastSuccessfulBuildID)
             def actions = lastSuccessful.getActions(hudson.model.ParametersAction)
             dockertag_id = actions.find { it.getParameterName() == 'DOCKERTAG_ID' }?.getResolvedValue()?.toInteger() ?: 1
+            break 
+            //lastSuccessfulBuildID = build.id as Integer
+            //def lastSuccessful = Jenkins.instance.getItemByFullName(JOB_NAME).getBuildByNumber(lastSuccessfulBuildID)
+            //def actions = lastSuccessful.getActions(hudson.model.ParametersAction)
+            //dockertag_id = actions.find { it.getParameterName() == 'DOCKERTAG_ID' }?.getResolvedValue()?.toInteger() ?: 1
             //dockertag_id = lastSuccessfulBuildID.getEnvVars("DOCKERTAG_ID").toInteger()
-            break
+            //break
         }
         build = build.previousBuild
     }
