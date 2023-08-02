@@ -1,10 +1,24 @@
-@Library('my-library') _
-
+def dockertag_id
+def lastSuccessfulBuildID = 0
+def build = currentBuild.previousBuild
+if (build == null) {
+    dockertag_id = 1
+} else {
+    while (build != null) {
+        if (build.result == "SUCCESS")
+        {
+            lastSuccessfulBuildID = currentBuild.getPreviousSuccessfulBuild()?.number ?:0v
+            dockertag_id = lastSuccessfulBuildID.getEnvVars()["DOCKERTAG_ID"]
+            break
+        }
+        build = build.previousBuild
+    }
+}
 pipeline {
     agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-        DOCKERTAG_ID = getDockerTag(this)
+        DOCKERTAG_ID = ${dockertag_id}
     }
     stages {
         stage("Clean-up") {
