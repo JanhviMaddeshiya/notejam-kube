@@ -7,6 +7,7 @@ if (build == null) {
         {
             lastSuccessfulBuildID = build.id as Integer
             dockertag_id = lastSuccessfulBuildID.get("DOCKERTAG_ID").toInteger()
+            break
         }
     }
 }
