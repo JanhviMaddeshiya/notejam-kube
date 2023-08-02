@@ -43,7 +43,8 @@ pipeline {
                         }
                     }
                     DOCKER = DOCKERTAG_ID as Integer
-                    env.DOCKERTAG = DOCKER + 1
+                    int a = 1
+                    env.DOCKERTAG = DOCKER + a
                     echo DOCKERTAG as String
                 }    
             }
