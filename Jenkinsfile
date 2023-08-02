@@ -24,6 +24,7 @@ pipeline {
             steps {
                 script {
                     def repo = sh "docker search janhvimaddeshiya/notejam-tag:latest"
+                    echo repo
                 }
             }
         }
