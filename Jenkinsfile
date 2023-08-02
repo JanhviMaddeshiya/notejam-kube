@@ -41,18 +41,17 @@ pipeline {
                             build = build.previousBuild
                         }
                     }
-                    def dockertag = DOCKERTAG_ID as Integer
                 }    
             }
         }
         stage("Build") {
             steps {
-                sh "docker build -t janhvimaddeshiya/notejam-tag:dockertag notejam-kube/"
+                sh "docker build -t janhvimaddeshiya/notejam-tag:${DOCKERTAG_ID} notejam-kube/"
             }
         }
         stage("Push-repo") {
             steps {
-                sh "docker push janhvimaddeshiya/notejam-tag:dockertag"
+                sh "docker push janhvimaddeshiya/notejam-tag:${DOCKERTAG_ID}"
             }
         }
     }
