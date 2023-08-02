@@ -5,19 +5,9 @@ if (build == null) {
     while (build != null) {
         if (build.result == "SUCCESS")
         {
-            lastSuccessfulBuildID = build.id as Integer
-            def lastSuccessful = Jenkins.instance.getItemByFullName("${JOB_NAME}").getBuildByNumber(lastSuccessfulBuildID)
-            def actions = lastSuccessful.getActions(hudson.model.ParametersAction)
-            dockertag_id = actions.find { it.getParameterName() == 'DOCKERTAG_ID' }?.getResolvedValue()?.toInteger() ?: 1
-            break 
-            //lastSuccessfulBuildID = build.id as Integer
-            //def lastSuccessful = Jenkins.instance.getItemByFullName(JOB_NAME).getBuildByNumber(lastSuccessfulBuildID)
-            //def actions = lastSuccessful.getActions(hudson.model.ParametersAction)
-            //dockertag_id = actions.find { it.getParameterName() == 'DOCKERTAG_ID' }?.getResolvedValue()?.toInteger() ?: 1
-            //dockertag_id = lastSuccessfulBuildID.getEnvVars("DOCKERTAG_ID").toInteger()
-            //break
+            def lastSuccessfullBuild = build.getPreviousBuild()
+            dockertag_id = lastSuccessfullBuild.${dockertag_id}
         }
-        build = build.previousBuild
     }
 }
 pipeline {
