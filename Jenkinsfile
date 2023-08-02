@@ -36,6 +36,7 @@ pipeline {
                                 // dockertag_id = lastSuccessfulBuildID.description
                                 //DOCKERTAG_ID = previousBuild.description
                                 env.DOCKERTAG_ID = "${lastSuccessfulBuildID + 1}" 
+                                echo DOCKERTAG_ID as String
                                 break
                             }
                             build = build.previousBuild
