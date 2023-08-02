@@ -6,7 +6,7 @@ while (build != null) {
     if (build.result == "SUCCESS")
     {
         lastSuccessfulBuildID = build.id as Integer
-        dockertag_id = lastSuccessfulBuildID.getBuildVariables().get("DOCKERTAG_ID")
+        dockertag_id = lastSuccessfulBuildID.getEnv("DOCKERTAG_ID")
     }
 }
 pipeline {
