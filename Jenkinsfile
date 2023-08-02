@@ -23,7 +23,6 @@ pipeline {
             steps {
                 script {
                     def DOCKERTAG_ID = 1
-                    currentBuild.description = DOCKERTAG_ID
                     def build = currentBuild.previousBuild
                     if (build == null) {
                         DOCKERTAG_ID = 1
