@@ -8,7 +8,7 @@ if (build == null) {
         if (build.result == "SUCCESS")
         {
             lastSuccessfulBuildID = build.id as Integer
-            dockertag_id = lastSuccessfullBuildID.${dockertag_id}
+            dockertag_id = ${lastSuccessfullBuildID}.${dockertag_id}
             break
         }
         build = build.previousBuild
