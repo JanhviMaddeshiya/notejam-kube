@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+        DOCKERTAG_ID = 1
     }
     stages {
         stage("Clean-up") {
@@ -22,7 +23,6 @@ pipeline {
         stage("search") {
             steps {
                 script {
-                    def DOCKERTAG_ID = 1
                     def build = currentBuild.previousBuild
                     if (build == null) {
                         DOCKERTAG_ID = 1
