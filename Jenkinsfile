@@ -20,13 +20,12 @@ pipeline {
                     }
 
                     def majorVersion = 1
-                    def minorVersion = buildNumber
                     if (lastSuccessfulBuildTag != "") {
                         // If a successful build exists, use its minor version.
                         minorVersion = lastSuccessfulBuildTag.split("\\.")[1].toInteger()
                     }
 
-                    def version = "${majorVersion}.${minorVersion}"
+                    def version = "${majorVersion}"
 
                     // Set the DOCKERTAG_ID with the version.
                     DOCKERTAG_ID = version
