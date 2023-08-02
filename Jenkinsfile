@@ -2,7 +2,6 @@ pipeline {
     agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-        DOCKERTAG = 1
         DOCKERTAG_ID = 1
     }
     stages {
@@ -32,18 +31,18 @@ pipeline {
                         while (build != null) {
                             if (build.result == "SUCCESS")
                             {
-
+                                def VAL1 = jenkins.model.Jenkins.instance.getItem('JOBNAME').lastBuild.getBuildVariables().get("DOCKERTAG_ID")
                                 // lastSuccessfulBuildID = build.id as Integer
-                                lastSuccessfulBuildID = build.get()
+                                //lastSuccessfulBuildID = build.get() 
                                 // dockertag_id = lastSuccessfulBuildID.description
                                 //DOCKERTAG_ID = previousBuild.description
-                                DOCKERTAG_ID = lastSuccessfulBuildID + 1
+                                DOCKERTAG_ID = VAL1 + 1
                                 break
                             }
                             build = build.previousBuild
                         }
                     }
-                    echo DOCKERTAG_ID as String
+                    echo VAL1 as String
                 }    
             }
         }
