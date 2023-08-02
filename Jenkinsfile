@@ -54,7 +54,7 @@ pipeline {
         }
         stage("Push-repo") {
             steps {
-                sh 'docker push janhvimaddeshiya/notejam-tag:${DOCKERTAG_ID}'
+                sh "docker push janhvimaddeshiya/notejam-tag:${DOCKERTAG_ID}"
             }
         }
     }
