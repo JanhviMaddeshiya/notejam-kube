@@ -36,8 +36,9 @@ pipeline {
                                 break
                             }
                             build = build.previousBuild
-    }
-}
+                        }
+                    }
+                }    
             }
         }
         stage("Build") {
