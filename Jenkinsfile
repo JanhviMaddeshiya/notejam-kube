@@ -1,12 +1,3 @@
-if (build.result == "SUCCESS") {
-            lastSuccessfulBuildID = build.id as Integer
-            def job = Jenkins.instance.getItem("JOB_NAME")
-            def lastSuccessful = job.getBuildByNumber(lastSuccessfulBuildID)
-            def actions = lastSuccessful.getActions(hudson.model.ParametersAction)
-            dockertag_id = actions.find { it.getParameterName() == 'DOCKERTAG_ID' }?.getResolvedValue()?.toInteger() ?: 1
-            break // Break out of the loop after finding the last successful build
-        }
-
 def build = currentBuild.previousBuild
 if (build == null) {
     dockertag_id = 1
