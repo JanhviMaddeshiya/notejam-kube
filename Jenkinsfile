@@ -41,7 +41,7 @@ pipeline {
                             build = build.previousBuild
                         }
                     }
-                    echo DOCKERTAG_ID as Integer
+                    echo DOCKERTAG_ID as String
                 }    
             }
         }
