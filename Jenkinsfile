@@ -41,6 +41,7 @@ pipeline {
                             build = build.previousBuild
                         }
                     }
+                    echo "docker" 
                     echo DOCKERTAG_ID as String
                 }    
             }
