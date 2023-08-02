@@ -32,7 +32,7 @@ pipeline {
                             {
                                 
                                 // lastSuccessfulBuildID = build.id as Integer
-                                lastSuccessfulBuildID = build.getVar(DOCKERTAG_ID)
+                                lastSuccessfulBuildID = build.description.toInteger()
                                 // dockertag_id = lastSuccessfulBuildID.description
                                 //DOCKERTAG_ID = previousBuild.description
                                 DOCKERTAG_ID = lastSuccessfulBuildID + 1
@@ -41,6 +41,7 @@ pipeline {
                             build = build.previousBuild
                         }
                     }
+                    echo DOCKERTAG_ID as String
                 }    
             }
         }
