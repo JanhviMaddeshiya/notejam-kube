@@ -14,6 +14,7 @@ if (build == null) {
             }
             break
         }
+        build = build.previousBuild
     }
 }
 pipeline {
