@@ -13,7 +13,7 @@ pipeline {
                     def previousBuild = currentBuild.previousBuild
                     while (previousBuild != null) {
                         if (previousBuild.result == "SUCCESS") {
-                            lastSuccessfulBuildTag = previousBuild.env.DOCKERTAG_ID
+                            lastSuccessfulBuildTag = previousBuild.getEnvVars().get('DOCKERTAG_ID')
                             break
                         }
                         previousBuild = previousBuild.previousBuild
