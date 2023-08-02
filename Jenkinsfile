@@ -24,7 +24,8 @@ pipeline {
             steps {
                 script {
                     def repo = sh "docker search janhvimaddeshiya/notejam-tag:latest"
-                    echo repo
+                    def tag = tags.tokenize('/n')
+                    echo tag
                 }
             }
         }
