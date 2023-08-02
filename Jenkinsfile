@@ -23,7 +23,7 @@ pipeline {
         stage("search") {
             steps {
                 script {
-                    def repo = sh "docker search janhvimaddeshiya/notejam-tag:latest"
+                    def repo = sh "docker search janhvimaddeshiya/notejam-tag:${DOCKERTAG_ID}"
                     def tag = tags.tokenize('/n')
                     echo tag
                 }
