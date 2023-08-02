@@ -18,7 +18,7 @@ pipeline {
     agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-        DOCKERTAG_ID = dockertag_id
+        DOCKERTAG_ID = "${dockertag_id}"
     }
     stages {
         stage("Clean-up") {
