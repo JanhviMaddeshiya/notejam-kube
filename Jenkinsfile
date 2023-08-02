@@ -6,7 +6,10 @@ if (build == null) {
         if (build.result == "SUCCESS")
         {
             lastSuccessfulBuildID = build.id as Integer
-            dockertag_id = lastSuccessfulBuildID.getEnvVars("DOCKERTAG_ID").toInteger()
+            def lastSuccessful = Jenkins.instance.getItemByFullName(JOB_NAME).getBuildByNumber(lastSuccessfulBuildID)
+            def actions = lastSuccessful.getActions(hudson.model.ParametersAction)
+            dockertag_id = actions.find { it.getParameterName() == 'DOCKERTAG_ID' }?.getResolvedValue()?.toInteger() ?: 1
+            //dockertag_id = lastSuccessfulBuildID.getEnvVars("DOCKERTAG_ID").toInteger()
             break
         }
         build = build.previousBuild
