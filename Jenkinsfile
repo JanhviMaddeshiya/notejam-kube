@@ -36,6 +36,7 @@ pipeline {
                                 lastSuccessfulBuildID = build.description.toInteger()
                                 // dockertag_id = lastSuccessfulBuildID.description
                                 //DOCKERTAG_ID = previousBuild.description
+                                echo lastSuccessfulBuildID
                                 env.DOCKERTAG_ID = lastSuccessfulBuildID
                                 break
                             }
