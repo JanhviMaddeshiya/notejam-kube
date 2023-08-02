@@ -24,15 +24,18 @@ pipeline {
             steps {
                 script {
                     def DOCKERTAG_ID = 1
+                    stash name: 'mystash', includes: DOCKERTAG_ID
                     def build = currentBuild.previousBuild
                     if (build == null) {
-                        DOCKERTAG_ID = 1
+                        dockertag_id = DOCKERTAG_ID
                     } else {
                         while (build != null) {
                             if (build.result == "SUCCESS")
                             {
                                 lastSuccessfulBuildID = build.id as Integer
-                                dockertag_id = lastSuccessfulBuildID.description
+                                // dockertag_id = lastSuccessfulBuildID.description
+                                DOCKERTAG_ID = unstash name: 'mystash'
+                                dockertag_id = DOCKERTAG_ID + 1
                                 break
                             }
                             build = build.previousBuild
