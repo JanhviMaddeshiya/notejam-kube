@@ -5,8 +5,12 @@ if (build == null) {
     while (build != null) {
         if (build.result == "SUCCESS")
         {
-            def lastSuccessfullBuild = build.getPreviousBuild()
-            dockertag_id = lastSuccessfullBuild.${dockertag_id}
+            def previousBuild = getPreviousBuild()
+            if (previousBuild != null) {
+                def lastSuccessfullBuild = build.getPreviousBuild()
+                dockertag_id = lastSuccessfullBuild.${dockertag_id}
+                break
+            }
             break
         }
     }
