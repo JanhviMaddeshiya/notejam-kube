@@ -8,7 +8,8 @@ if (build == null) {
         if (build.result == "SUCCESS")
         {
             lastSuccessfulBuildID = currentBuild.getPreviousSuccessfulBuild()?.number ?:0
-            dockertag_id = lastSuccessfulBuildID.${DOCKERTAG_ID}
+            dockertag_id = (lastSuccessfulBuildID.${DOCKERTAG_ID}).toInteger
+            
             break
         }
         build = build.previousBuild
