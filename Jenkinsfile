@@ -32,7 +32,7 @@ pipeline {
                             if (build.result == "SUCCESS")
                             {
                                 //def VAL1 = jenkins.model.Jenkins.instance.getItem('JOBNAME').lastBuild.getBuildVariables().get("DOCKERTAG_ID")
-                                lastSuccessfulBuildID = build.id as Integer
+                                //lastSuccessfulBuildID = build.id as Integer
                                 lastSuccessfulBuildID = build.getBuildVariables().get("DOCKERTAG_ID") 
                                 // dockertag_id = lastSuccessfulBuildID.description
                                 //DOCKERTAG_ID = previousBuild.description
