@@ -1,4 +1,7 @@
 def build = currentBuild.previousBuild
+if (build == null) {
+    dockertag_id = 1
+}
 while (build != null) {
     if (build.result == "SUCCESS")
     {
