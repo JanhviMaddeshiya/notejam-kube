@@ -47,12 +47,12 @@ pipeline {
         }
         stage("Build") {
             steps {
-                sh "docker build -t janhvimaddeshiya/notejam-tag:${DOCKERTAG_ID} notejam-kube/"
+                sh "docker build -t janhvimaddeshiya/notejam-tag:DOCKERTAG_ID notejam-kube/"
             }
         }
         stage("Push-repo") {
             steps {
-                sh "docker push janhvimaddeshiya/notejam-tag:${DOCKERTAG_ID}"
+                sh "docker push janhvimaddeshiya/notejam-tag:DOCKERTAG_ID"
             }
         }
     }
