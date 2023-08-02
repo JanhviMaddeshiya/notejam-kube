@@ -9,6 +9,7 @@ if (build == null) {
             dockertag_id = lastSuccessfulBuildID.get("DOCKERTAG_ID").toInteger()
             break
         }
+        build = build.previousBuild
     }
 }
 pipeline {
