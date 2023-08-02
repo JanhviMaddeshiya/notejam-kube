@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-        DOCKERTAG_ID = 1
+        DOCKERTAG = 1
     }
     stages {
         stage("Clean-up") {
@@ -25,7 +25,7 @@ pipeline {
                 script {
                     def build = currentBuild.previousBuild
                     if (build == null) {
-                        DOCKERTAG_ID = 1
+                        DOCKERTAG_ID = ${DOCKERTAG_ID}
                     } else {
                         while (build != null) {
                             if (build.result == "SUCCESS" && build.description != null)
@@ -35,13 +35,13 @@ pipeline {
                                 lastSuccessfulBuildID = build.description.toInteger()
                                 // dockertag_id = lastSuccessfulBuildID.description
                                 //DOCKERTAG_ID = previousBuild.description
-                                env.DOCKERTAG_ID = "${lastSuccessfulBuildID} + ${DOCKERTAG_ID}"
+                                DOCKERTAG_ID = lastSuccessfulBuildID
                                 break
                             }
                             build = build.previousBuild
                         }
                     }
-                    echo DOCKERTAG_ID as String
+                    DOCKERTAG = DOCKERTAG_ID + 1
                 }    
             }
         }
