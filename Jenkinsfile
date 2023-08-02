@@ -28,7 +28,7 @@ pipeline {
                         DOCKERTAG_ID = 1
                     } else {
                         while (build != null) {
-                            if (build.result == "SUCCESS")
+                            if (build.result == "SUCCESS" && build.description != null)
                             {
                                 
                                 // lastSuccessfulBuildID = build.id as Integer
