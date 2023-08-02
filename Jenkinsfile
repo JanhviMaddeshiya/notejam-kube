@@ -1,3 +1,4 @@
+def dockertag_id
 def build = currentBuild.previousBuild
 if (build == null) {
     dockertag_id = 1
