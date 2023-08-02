@@ -7,7 +7,7 @@ if (build == null) {
     while (build != null) {
         if (build.result == "SUCCESS")
         {
-            lastSuccessfulBuildID = currentBuild.getPreviousSuccessfulBuild()?.number ?:0v
+            lastSuccessfulBuildID = currentBuild.getPreviousSuccessfulBuild()?.number ?:0
             dockertag_id = lastSuccessfulBuildID.getEnvVars()["DOCKERTAG_ID"]
             break
         }
