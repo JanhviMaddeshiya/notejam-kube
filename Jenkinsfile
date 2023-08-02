@@ -23,9 +23,18 @@ pipeline {
         stage("search") {
             steps {
                 script {
-                    def repo = sh "docker search janhvimaddeshiya/notejam-tag:${DOCKERTAG_ID}"
-                    def tag = tags.tokenize('/n')
-                    echo tag
+                    def build = currentBuild.previousBuild
+                    if (build == null) {
+                        DOCKERTAG_ID = 1
+                    } else {
+                        while (build != null) {
+                            if (build.result == "SUCCESS")
+                                {
+                                    DOCKERTAG_ID = DOCKERTAG_ID + 1
+                                    break
+                                }
+                                build = build.previousBuild
+                        }
                 }
             }
         }
