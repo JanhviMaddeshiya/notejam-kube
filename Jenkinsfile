@@ -27,15 +27,17 @@ pipeline {
                     currentBuild.description = DOCKERTAG_ID
                     def build = currentBuild.previousBuild
                     if (build == null) {
-                        dockertag_id = DOCKERTAG_ID
+                        DOCKERTAG_ID = 1
                     } else {
                         while (build != null) {
                             if (build.result == "SUCCESS")
                             {
-                                lastSuccessfulBuildID = build.id as Integer
+                                
+                                // lastSuccessfulBuildID = build.id as Integer
+                                lastSuccessfulBuildID = build.getNumber()
                                 // dockertag_id = lastSuccessfulBuildID.description
-                                DOCKERTAG_ID = previousBuild.description
-                                dockertag_id = DOCKERTAG_ID + 1
+                                //DOCKERTAG_ID = previousBuild.description
+                                DOCKERTAG_ID = lastSuccessfulBuildID + 1
                                 break
                             }
                             build = build.previousBuild
