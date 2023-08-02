@@ -42,7 +42,8 @@ pipeline {
                             build = build.previousBuild
                         }
                     }
-                    DOCKERTAG = DOCKERTAG_ID as Integer + 1
+                    DOCKER = DOCKERTAG_ID as Integer
+                    env.DOCKERTAG = DOCKER + 1
                     echo DOCKERTAG as String
                 }    
             }
