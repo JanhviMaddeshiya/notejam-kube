@@ -3,6 +3,7 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
         DOCKERTAG = 1
+        DOCKERTAG_ID = 1
     }
     stages {
         stage("Clean-up") {
@@ -35,7 +36,7 @@ pipeline {
                                 lastSuccessfulBuildID = build.description.toInteger()
                                 // dockertag_id = lastSuccessfulBuildID.description
                                 //DOCKERTAG_ID = previousBuild.description
-                                DOCKERTAG_ID = lastSuccessfulBuildID
+                                env.DOCKERTAG_ID = lastSuccessfulBuildID
                                 break
                             }
                             build = build.previousBuild
