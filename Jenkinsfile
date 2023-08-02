@@ -23,10 +23,9 @@ pipeline {
         stage("search") {
             steps {
                 script {
-                    def DOCKERTAG_ID = 1
                     def build = currentBuild.previousBuild
                     if (build == null) {
-                        DOCKERTAG_ID = 1
+                        env.DOCKERTAG_ID = 1
                     } else {
                         while (build != null) {
                             if (build.result == "SUCCESS")
@@ -36,14 +35,13 @@ pipeline {
                                 lastSuccessfulBuildID = build.getBuildVariables().get("DOCKERTAG_ID") 
                                 // dockertag_id = lastSuccessfulBuildID.description
                                 //DOCKERTAG_ID = previousBuild.description
-                                DOCKERTAG_ID = lastSuccessfulBuildID 
-                                echo DOCKERTAG_ID
+                                env.DOCKERTAG_ID = lastSuccessfulBuildID 
                                 break
                             }
                             build = build.previousBuild
                         }
                     }
-                    //echo DOCKERTAG_ID as String
+                    echo DOCKERTAG_ID as String
                 }    
             }
         }
