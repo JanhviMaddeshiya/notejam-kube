@@ -6,7 +6,7 @@ if (build == null) {
         if (build.result == "SUCCESS")
         {
             lastSuccessfulBuildID = build.id as Integer
-            dockertag_id = lastSuccessfulBuildID.getEnv("DOCKERTAG_ID").toInteger()
+            dockertag_id = lastSuccessfulBuildID.get("DOCKERTAG_ID").toInteger()
         }
     }
 }
