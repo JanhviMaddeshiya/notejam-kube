@@ -35,7 +35,7 @@ pipeline {
                                 lastSuccessfulBuildID = build.getBuildVariables().get("DOCKERTAG_ID") 
                                 // dockertag_id = lastSuccessfulBuildID.description
                                 //DOCKERTAG_ID = previousBuild.description
-                                env.DOCKERTAG_ID = lastSuccessfulBuildID 
+                                env.DOCKERTAG_ID = ${lastSuccessfulBuildID + 1} 
                                 break
                             }
                             build = build.previousBuild
