@@ -23,23 +23,24 @@ pipeline {
         stage("search") {
             steps {
                 script {
-                        while (build != null) {
-                            if (build.result == "SUCCESS")
-                            {
+                    def build = currentBuild.previousBuild
+                    while (build != null) {
+                        if (build.result == "SUCCESS")
+                        {
                                 //def VAL1 = jenkins.model.Jenkins.instance.getItem('JOBNAME').lastBuild.getBuildVariables().get("DOCKERTAG_ID")
                                 //lastSuccessfulBuildID = build.id as Integer
-                                lastSuccessfulBuildID = build.getBuildVariables().get("DOCKERTAG_ID") 
+                           lastSuccessfulBuildID = build.getBuildVariables().get("DOCKERTAG_ID") 
                                 // dockertag_id = lastSuccessfulBuildID.description
                                 //DOCKERTAG_ID = previousBuild.description
-                                env.DOCKERTAG_ID = "${lastSuccessfulBuildID + 1}" 
-                                echo DOCKERTAG_ID as String
-                                break
-                            }
-                            build = build.previousBuild
+                            env.DOCKERTAG_ID = "${lastSuccessfulBuildID + 1}" 
+                            echo DOCKERTAG_ID as String
+                            break
                         }
-                        echo "docker" 
-                        echo DOCKERTAG_ID as String
+                        build = build.previousBuild
                     }
+                    echo "docker" 
+                    echo DOCKERTAG_ID as String
+                }
                     
             }
         }
