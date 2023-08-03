@@ -23,10 +23,6 @@ pipeline {
         stage("search") {
             steps {
                 script {
-                    def build = currentBuild.previousBuild
-                    if (build == null) {
-                        env.DOCKERTAG_ID = 1
-                    } else {
                         while (build != null) {
                             if (build.result == "SUCCESS")
                             {
@@ -41,10 +37,10 @@ pipeline {
                             }
                             build = build.previousBuild
                         }
+                        echo "docker" 
+                        echo DOCKERTAG_ID as String
                     }
-                    echo "docker" 
-                    echo DOCKERTAG_ID as String
-                }    
+                    
             }
         }
         stage("Build") {
