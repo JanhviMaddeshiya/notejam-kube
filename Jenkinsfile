@@ -13,9 +13,8 @@ while (build != null) {
             break
         }
         build = build.previousBuild
+    echo DOCKERTAG_ID
 }
-echo "docker" 
-echo DOCKERTAG_ID as Stirng
 
 pipeline {
     agent any
