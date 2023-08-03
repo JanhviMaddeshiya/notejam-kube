@@ -13,7 +13,6 @@ while (build != null) {
             break
         }
         build = build.previousBuild
-    echo DOCKERTAG_ID
 }
 
 pipeline {
