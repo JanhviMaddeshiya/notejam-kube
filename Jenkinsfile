@@ -22,7 +22,7 @@ pipeline {
         stage("search") {
             steps {
                 script {
-                    DOCKERTAG_ID = 1
+                    def DOCKERTAG_ID = 1
                     def build = currentBuild.previousBuild
                     while (build != null) {
                         if (build.result == "SUCCESS")
@@ -32,7 +32,7 @@ pipeline {
                            lastSuccessfulBuildID = build.getBuildVariables().get("DOCKERTAG_ID") 
                                 // dockertag_id = lastSuccessfulBuildID.description
                                 //DOCKERTAG_ID = previousBuild.description
-                            env.DOCKERTAG_ID = "${lastSuccessfulBuildID + 1}" 
+                            DOCKERTAG_ID = "${lastSuccessfulBuildID + 1}" 
                             echo DOCKERTAG_ID as String
                             break
                         }
