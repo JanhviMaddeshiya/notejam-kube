@@ -1,18 +1,14 @@
-def DOCKERTAG_ID = 1
-def build = currentBuild.previousBuild
-while (build != null) {
-    if (build.result == "SUCCESS")
-        {
-                                //def VAL1 = jenkins.model.Jenkins.instance.getItem('JOBNAME').lastBuild.getBuildVariables().get("DOCKERTAG_ID")
-                                //lastSuccessfulBuildID = build.id as Integer
-            lastSuccessfulBuildID = build.getBuildVariables().get("DOCKERTAG_ID") 
-                                // dockertag_id = lastSuccessfulBuildID.description
-                                //DOCKERTAG_ID = previousBuild.description
-            DOCKERTAG_ID = "${lastSuccessfulBuildID}" 
-            echo DOCKERTAG_ID as String
-            break
-        }
-        build = build.previousBuild
+def counter = 0
+def data = "V" + counter
+writeFile(file: 'version.txt', text: counter.toString())
+ if (fileExists()) {
+     def build = currentBuild.previousBuild
+     while (build != null) {
+        if (build.result == "SUCCESS")
+            {
+               def DOCKERTAG_ID = data
+            }
+     }
 }
 
 pipeline {
@@ -29,6 +25,15 @@ pipeline {
         stage("Clone repo") {
             steps {
                 sh "git clone https://github.com/JanhviMaddeshiya/notejam-kube/"
+            }
+        }
+        stage('read') {
+            steps {
+                stage {
+                    def readcounter = readFile(file: 'version.txt')
+                    readcounter=readcounter.toInteger() +1
+                    def DOCKERTAG_ID = readcounter
+                }
             }
         }
         stage("Log-in") {
