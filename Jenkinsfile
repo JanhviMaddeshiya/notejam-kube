@@ -10,7 +10,9 @@ writeFile(file: 'version.txt', text: counter.toString())
             }
      }
 }
-
+def readcounter = readFile(file: 'version.txt')
+readcounter=readcounter.toInteger() +1
+def DOCKERTAG_ID = readcounter
 pipeline {
     agent any
     environment {
