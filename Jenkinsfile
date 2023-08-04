@@ -8,7 +8,7 @@ if (build == null) {
 while (build != null) {
     if (build.result == "SUCCESS") {
         lastSuccessfulBuildID = build.id as Integer
-        def var = lastSuccessfulBuildID.getVar().get("version")
+        def var = lastSuccessfulBuildID.${version}
         version = var + 1
         break
     } else if(build.result == "FAILURE") {
