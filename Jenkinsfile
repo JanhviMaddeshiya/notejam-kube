@@ -12,7 +12,7 @@ while (build != null) {
         break
     } else if(build.result == "FAILURE") {
         lastSuccessfulBuildID = build.id as Integer
-        version = lastSuccessfulBuildID - buildNumber
+        version = buildNumber - lastSuccessfulBuildID
     }
     build = build.previousBuild
 }
