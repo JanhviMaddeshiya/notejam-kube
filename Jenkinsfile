@@ -21,16 +21,16 @@ pipeline {
         }
         stage("Version") {
             steps {
-                def lastSuccessfulBuildID = 0
-                def version = 0
-                def buildNumber = currentBuild.number
-                def build = currentBuild.previousBuild
-                if (build == null) {
-                    version = 1
-                }
-                while (build != null) {
-                    if (build.result == "SUCCESS")
-                        {
+                script {
+                    def lastSuccessfulBuildID = 0
+                    def version = 0
+                    def buildNumber = currentBuild.number
+                    def build = currentBuild.previousBuild
+                    if (build == null) {
+                        version = 1
+                    }
+                    while (build != null) {
+                        if (build.result == "SUCCESS") {
                             lastSuccessfulBuildID = build.id as Integer
                             version = lastSuccessfulBuildID + 1
                             break
@@ -39,6 +39,7 @@ pipeline {
                             version = lastSuccessfulBuildID - buildNumber
                         }
                         build = build.previousBuild
+                    }
                 }
             }
         }
