@@ -3,12 +3,13 @@ def version = 0
 def buildNumber = currentBuild.number
 def build = currentBuild.previousBuild
 if (build == null) {
-    version = 1
+    version = 0
 }
 while (build != null) {
     if (build.result == "SUCCESS") {
         lastSuccessfulBuildID = build.id as Integer
-        version = lastSuccessfulBuildID + 1
+        def var = lastSuccessfulBuildID.getEnvVar().get("version")
+        version = var + 1
         break
     } else if(build.result == "FAILURE") {
         lastSuccessfulBuildID = build.id as Integer
