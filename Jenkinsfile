@@ -3,7 +3,7 @@ def version = 0
 def buildNumber = currentBuild.number
 def build = currentBuild.previousBuild
 if (build == null) {
-    version = 0
+    version = 1
 }
 while (build != null) {
     if (build.result == "SUCCESS") {
