@@ -8,13 +8,14 @@ if (build == null) {
 while (build != null) {
     if (build.result == "SUCCESS") {
         lastSuccessfulBuildID = build.id as Integer
-        def var = lastSuccessfulBuildID.getEnvVar().get("version")
+        def var = lastSuccessfulBuildID.getVar().get("version")
         version = var + 1
         break
     } else if(build.result == "FAILURE") {
         lastSuccessfulBuildID = build.id as Integer
         version = buildNumber - lastSuccessfulBuildID
     }
+    
     build = build.previousBuild
 }
 pipeline {
