@@ -35,16 +35,6 @@ spec:
             secretKeyRef:
               name: pgsecret
               key: password
-        # - name: POSTGRES_HOST
-        #   valueFrom:
-        #     configMapKeyRef:
-        #       name: postgres-configmap
-        #       key: postgres-host
-        # - name: POSTGRES_DBNAME
-        #   valueFrom:
-        #     configMapKeyRef:
-        #       name: postgres-configmap
-        #       key: postgres-dbname
         volumeMounts:
           - name: postgres-volume-mount
             mountPath: /var/lib/postgresql/data
