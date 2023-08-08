@@ -1,23 +1,3 @@
-def lastSuccessfulBuildID = 0
-def version = 0
-def buildNumber = currentBuild.number
-def build = currentBuild.previousBuild
-if (build == null) {
-    version = 1
-}
-while (build != null) {
-    if (build.result == "SUCCESS") {
-        lastSuccessfulBuildID = build.id as Integer
-        def var = lastSuccessfulBuildID
-        version = var + 1
-        break
-    } else if(build.result == "FAILURE") {
-        lastSuccessfulBuildID = build.id as Integer
-        version = buildNumber - lastSuccessfulBuildID
-    }
-    
-    build = build.previousBuild
-}
 pipeline {
     agent any
     environment {
@@ -41,12 +21,12 @@ pipeline {
         }
         stage("Build") {
             steps {
-                sh "docker build -t janhvimaddeshiya/notejam-tag:${version} notejam-kube/"
+                sh "docker build -t janhvimaddeshiya/notejam-tag notejam-kube/"
             }
         }
         stage("Push-repo") {
             steps {
-                sh "docker push janhvimaddeshiya/notejam-tag:${version}"
+                sh "docker push janhvimaddeshiya/notejam-tag"
             }
         }
     }
